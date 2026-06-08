@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDM Coffee and Eatery | Nyaman & Elegan</title>
+    <meta name="description" content="MDM Coffee and Eatery. Tempat nongkrong nyaman di Cipondoh, Tangerang. Buka hingga 22.00.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Poppins', 'sans-serif'], 
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: '#6F4E37', secondary: '#FDFBF7',
+                        accent: '#EAB308', dark: '#1A1A1A',
+                        darkbrown: '#2C1E16', golden: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-secondary text-dark font-sans antialiased overflow-x-hidden relative">
+
+    <div id="parallax-bg" class="coffee-pattern"></div>
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[999] flex flex-col gap-3 pointer-events-none"></div>
+
+    <header class="absolute top-0 left-0 w-full z-50 py-6 px-4 md:px-12 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-secondary tracking-wider drop-shadow-md font-serif">MDM.</h1>
+        <nav class="hidden md:flex gap-8 text-secondary font-medium">
+            <a href="#hero" class="hover:text-accent transition-colors hover:scale-105 inline-block">Home</a>
+            <a href="#tentang" class="hover:text-accent transition-colors hover:scale-105 inline-block">Tentang</a>
+            <a href="#menu" class="hover:text-accent transition-colors hover:scale-105 inline-block">Menu</a>
+            <a href="#gallery" class="hover:text-accent transition-colors hover:scale-105 inline-block">Galeri</a>
+            <a href="#reservasi" class="hover:text-accent transition-colors hover:scale-105 inline-block">Reservasi</a>
+            <a href="#lokasi" class="hover:text-accent transition-colors hover:scale-105 inline-block">Lokasi</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Suasana MDM" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+            <div class="absolute inset-0 bg-black/65"></div>
+            
+            <div class="relative z-10 text-center px-6 flex flex-col items-center fade-in-element">
+                <span id="live-tagline" class="text-accent font-medium tracking-widest uppercase text-sm mb-4">Est. 2023 • Tangerang</span>
+                <h2 class="text-5xl md:text-7xl font-bold text-secondary mb-6 leading-tight font-serif"><span id="live-name1">MDM Coffee</span> <br/><span class="text-4xl md:text-6xl font-light italic text-accent" id="live-name2">& Eatery</span></h2>
+                <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-8 font-light">Sajian kopi terbaik dengan nuansa cozy & elegan. Tempat sempurna untuk cerita hari ini.</p>
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <div class="glass-panel px-6 py-3 rounded-full border border-white/20 text-secondary text-sm flex items-center gap-2 hover:border-accent transition-colors">
+                        <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="live-hours">Buka hingga 22.00 WIB</span>
+                    </div>
+                </div>
+                <a href="#menu" class="bg-primary hover:bg-accent hover:text-dark text-secondary px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-accent/50 hover:scale-105">Lihat Menu</a>
+            </div>
+
+            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-20 translate-y-[1px]">
+                <svg class="relative block w-full h-[50px] md:h-[100px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.83,121.22,201.2,110.8Z" fill="#FDFBF7"></path>
+                </svg>
+            </div>
+        </section>
+
+        <section id="tentang" class="py-24 px-6 md:px-12 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+            <div class="w-full md:w-1/2 space-y-6">
+                <h2 class="text-4xl md:text-5xl font-bold text-primary font-serif leading-tight">Kisah Secangkir <br>Kopi MDM</h2>
+                <div class="w-20 h-1 bg-accent rounded-full"></div>
+                <p id="live-about" class="text-gray-600 text-lg leading-relaxed">Berawal dari kecintaan terhadap racikan kopi nusantara, MDM Coffee & Eatery hadir untuk menjadi ruang temu. Bukan sekadar tempat singgah, melainkan rumah kedua di mana setiap cerita, tawa, dan gagasan mengalir bersama hangatnya kopi yang kami seduh.</p>
+                <blockquote class="border-l-4 border-accent pl-5 py-2 italic text-xl text-primary font-serif">"Every cup tells a story. Mari rangkai ceritamu di sini."</blockquote>
+            </div>
+            <div class="w-full md:w-1/2 relative mt-8 md:mt-0">
+                <div class="absolute -inset-4 bg-accent/30 rounded-tl-[80px] rounded-br-[80px] -z-10 transform translate-x-4 translate-y-4"></div>
+                <img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=80" alt="Suasana MDM Coffee" class="w-full h-[350px] md:h-[450px] object-cover rounded-tl-[80px] rounded-br-[80px] shadow-2xl hover:scale-[1.02] transition-transform duration-500" loading="lazy">
+            </div>
+        </section>
+
+        <section id="menu" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">Best Seller Menu</h3>
+                <div class="w-24 h-1 bg-accent mx-auto rounded-full"></div>
+            </div>
+            <div id="home-menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="col-span-full text-center text-gray-400 py-10 animate-pulse">Memuat menu terbaru...</div>
+            </div>
+            <div class="text-center">
+                <button onclick="toggleModal('fullMenuModal')" class="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-secondary px-8 py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 shadow-lg">
+                    Lihat Semua Menu
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </button>
+            </div>
+        </section>
+
+        <section id="gallery" class="py-24 px-6 md:px-12 bg-white/60 backdrop-blur-md relative border-y border-white">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl md:text-4xl font-bold text-primary mb-4 font-serif">Highlight Galeri</h3>
+                    <div class="w-24 h-1 bg-accent mx-auto rounded-full"></div>
+                </div>
+                <div id="home-gallery-container" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                     <div class="col-span-full text-center text-gray-400 py-10 animate-pulse">Memuat galeri...</div>
+                </div>
+                <div class="text-center">
+                    <button onclick="toggleModal('fullGalleryModal')" class="text-primary hover:text-accent font-medium transition-all border-b border-transparent hover:border-accent pb-1 inline-block hover:scale-105">
+                        Eksplorasi Lebih Banyak Galeri →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="reservasi" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+            <div class="bg-primary rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row hover-card-effect">
+                <div class="w-full md:w-5/12 bg-dark p-10 md:p-14 text-secondary flex flex-col justify-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-4 relative z-10 font-serif">Pesan Meja Anda</h3>
+                    <p class="text-gray-400 mb-8 font-light relative z-10">Pastikan momen spesial Anda tak terganggu. Reservasi tempat sekarang untuk kenyamanan ekstra.</p>
+                </div>
+                <div class="w-full md:w-7/12 p-6 md:p-14 bg-white">
+                    <form id="form-reservasi" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                                <input type="text" id="res-nama" required class="w-full border-gray-200 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent bg-gray-50 hover:border-gray-300 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Orang</label>
+                                <select id="res-jumlah" class="w-full border-gray-200 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent bg-gray-50 hover:border-gray-300 transition-colors">
+                                    <option value="1 - 2 Orang">1 - 2 Orang</option>
+                                    <option value="3 - 4 Orang">3 - 4 Orang</option>
+                                    <option value="5 - 8 Orang">5 - 8 Orang</option>
+                                    <option value="Lebih dari 8 (Grup)">Lebih dari 8 (Grup)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                                <input type="date" id="res-tanggal" required class="w-full border-gray-200 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent bg-gray-50 hover:border-gray-300 transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Waktu Kedatangan</label>
+                                <input type="time" id="res-waktu" required class="w-full border-gray-200 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent bg-gray-50 hover:border-gray-300 transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Tambahan (Opsional)</label>
+                            <textarea id="res-catatan" rows="3" class="w-full border-gray-200 border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent bg-gray-50 hover:border-gray-300 transition-colors"></textarea>
+                        </div>
+                        <button type="submit" id="btn-submit-res" class="w-full bg-primary hover:bg-accent hover:text-dark text-secondary font-bold py-4 rounded-xl transition-all duration-300 shadow-md hover:scale-[1.02] active:scale-95">
+                            Kirim Permintaan via WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="lokasi" class="py-24 px-6 md:px-12 max-w-4xl mx-auto text-center">
+            <h3 class="text-3xl md:text-4xl font-bold text-primary font-serif mb-4">Kunjungi Kami</h3>
+            <div class="w-24 h-1 bg-accent mx-auto rounded-full mb-8"></div>
+            <p class="text-gray-600 text-lg leading-relaxed mb-8">Nikmati suasana cozy kami secara langsung. Berlokasi di area strategis Tangerang, siap menemani waktu santai Anda dengan parkiran luas dan area indoor/outdoor.</p>
+            
+            <div class="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 max-w-2xl mx-auto hover-card-effect">
+                <svg class="w-12 h-12 text-accent mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <h4 class="font-bold text-dark text-xl mb-2">Alamat Lengkap</h4>
+                <p id="live-address" class="text-gray-600 mb-8">Jl. Irigasi Sipon, RT.006/RW.004, Kenanga, Kec. Cipondoh, Kota Tangerang</p>
+                
+                <a href="https://maps.google.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 bg-dark hover:bg-primary text-secondary px-8 py-4 rounded-xl font-medium transition-colors w-full sm:w-auto shadow-md">
+                    📍 Buka di Google Maps
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-secondary py-12 px-6 relative mt-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col justify-center items-center gap-4">
+            <h2 class="text-3xl font-bold tracking-wider text-accent font-serif">MDM.</h2>
+            <p class="text-gray-400 text-sm">Coffee & Eatery © 2026. All rights reserved.</p>
+        </div>
+        <div class="absolute bottom-4 right-4 pointer-events-auto">
+            <button onclick="handleAdminEntry()" class="opacity-10 hover:opacity-100 text-[10px] cursor-pointer transition-opacity duration-300 focus:outline-none">Admin Panel</button>
+        </div>
+    </footer>
+
+    <a href="#" id="fab-wa" class="fixed bottom-6 right-6 bg-[#25D366] text-white p-4 rounded-full shadow-[0_10px_25px_rgba(37,211,102,0.5)] hover:scale-110 transition-transform z-40 flex items-center justify-center">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.418-.099.824z"/></svg>
+    </a>
+
+    <div id="fullMenuModal" class="fixed inset-0 z-[100] hidden bg-darkbrown overflow-y-auto pb-20">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-golden/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <button onclick="toggleModal('fullMenuModal')" class="fixed top-6 left-6 z-[110] glass-panel bg-white/10 shadow-lg border border-golden/20 text-secondary px-5 py-2.5 rounded-full flex items-center gap-2 font-semibold hover:bg-golden hover:text-dark transition-all duration-300 hover:scale-105">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+        </button>
+
+        <div class="max-w-6xl mx-auto px-6 pt-24 mt-4 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-golden font-serif text-center mb-10">Buku Menu</h2>
+            <div class="flex overflow-x-auto gap-4 mb-10 hide-scrollbar justify-start md:justify-center px-2">
+                <button onclick="filterMenu('Semua', this)" class="menu-filter-btn px-8 py-3 bg-golden text-dark rounded-full font-bold whitespace-nowrap transition-colors shadow-md">Semua</button>
+                <button onclick="filterMenu('Kopi', this)" class="menu-filter-btn px-8 py-3 glass-panel border border-golden/30 text-secondary rounded-full font-medium whitespace-nowrap hover:bg-white/10 transition-colors shadow-sm">Kopi</button>
+                <button onclick="filterMenu('Makanan', this)" class="menu-filter-btn px-8 py-3 glass-panel border border-golden/30 text-secondary rounded-full font-medium whitespace-nowrap hover:bg-white/10 transition-colors shadow-sm">Makanan</button>
+                <button onclick="filterMenu('Cemilan', this)" class="menu-filter-btn px-8 py-3 glass-panel border border-golden/30 text-secondary rounded-full font-medium whitespace-nowrap hover:bg-white/10 transition-colors shadow-sm">Cemilan</button>
+            </div>
+            <div id="full-menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2"></div>
+        </div>
+    </div>
+
+    <div id="fullGalleryModal" class="fixed inset-0 z-[100] hidden bg-darkbrown overflow-y-auto pb-20">
+        <div class="absolute top-0 right-0 w-96 h-96 bg-golden/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <button onclick="toggleModal('fullGalleryModal')" class="fixed top-6 left-6 z-[110] glass-panel bg-white/10 shadow-lg border border-golden/20 text-secondary px-5 py-2.5 rounded-full flex items-center gap-2 font-semibold hover:bg-golden hover:text-dark transition-all duration-300 hover:scale-105">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+        </button>
+
+        <div class="max-w-7xl mx-auto px-6 pt-24 mt-4 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-golden font-serif text-center mb-10">Galeri <span class="text-secondary italic">Lengkap</span></h2>
+            <div id="full-gallery-grid" class="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
+                </div>
+        </div>
+    </div>
+
+    <div id="lightboxModal" class="fixed inset-0 z-[200] hidden bg-black/90 backdrop-blur-xl flex items-center justify-center fade-in-element">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-accent z-[210] p-2 bg-white/10 rounded-full glass-panel">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <button onclick="prevLightbox()" class="absolute left-4 md:left-10 text-white hover:text-accent z-[210] p-3 bg-white/10 rounded-full glass-panel hidden md:block">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <img id="lightbox-img" src="" class="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-2xl transition-opacity duration-300">
+        <button onclick="nextLightbox()" class="absolute right-4 md:right-10 text-white hover:text-accent z-[210] p-3 bg-white/10 rounded-full glass-panel hidden md:block">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <p id="lightbox-caption" class="absolute bottom-6 text-white font-serif text-lg md:text-xl text-center w-full px-4"></p>
+    </div>
+
+    <div id="adminLoginModal" class="fixed inset-0 z-[110] hidden bg-black/80 backdrop-blur-md items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md relative">
+            <button onclick="toggleModal('adminLoginModal')" class="absolute top-6 right-6 text-gray-400 hover:text-dark bg-gray-100 p-2 rounded-full">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-3xl font-bold text-center text-primary mb-6 font-serif">Admin Access</h2>
+            <form id="form-admin-login" onsubmit="handleLoginSubmit(event)">
+                <div class="space-y-5">
+                    <input type="text" id="admin-username" class="w-full border-gray-300 border rounded-xl px-5 py-4 focus:ring-2 focus:ring-primary focus:outline-none bg-gray-50 text-lg" required placeholder="Username (admin)">
+                    <input type="password" id="admin-password" class="w-full border-gray-300 border rounded-xl px-5 py-4 focus:ring-2 focus:ring-primary focus:outline-none bg-gray-50 text-lg" required placeholder="Password (123)">
+                    <button type="submit" id="btn-login-admin" class="w-full bg-dark hover:bg-accent hover:text-dark text-white py-4 rounded-xl transition-colors font-bold mt-2 shadow-md text-lg">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="adminDashboardModal" class="fixed inset-0 z-[120] hidden bg-gray-50 flex-col md:flex-row">
+        <div class="w-full md:w-64 bg-dark text-white p-4 md:p-6 flex flex-col shrink-0 shadow-xl z-10 border-b md:border-r border-white/10">
+            <div class="flex justify-between items-center mb-4 md:mb-8">
+                <h2 class="text-xl md:text-2xl font-bold text-accent font-serif">MDM Admin.</h2>
+                <button onclick="toggleModal('adminDashboardModal')" class="md:hidden text-white hover:text-accent">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0 flex-1">
+                <button onclick="switchAdminTab('keterangan')" id="tab-keterangan" class="admin-tab whitespace-nowrap text-left px-4 py-3 bg-white/10 rounded-lg text-white font-medium transition-colors">Dashboard</button>
+                <button onclick="switchAdminTab('tampilan')" id="tab-tampilan" class="admin-tab whitespace-nowrap text-left px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors">Tampilan Utama</button>
+                <button onclick="switchAdminTab('menu')" id="tab-menu" class="admin-tab whitespace-nowrap text-left px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors">Kelola Menu</button>
+                <button onclick="switchAdminTab('galeri')" id="tab-galeri" class="admin-tab whitespace-nowrap text-left px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors">Kelola Galeri</button>
+            </nav>
+            <button onclick="handleAdminLogout()" class="mt-4 md:mt-auto px-4 py-3 text-red-400 hover:bg-white/5 rounded-lg text-left flex items-center gap-2 justify-center md:justify-start">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3h4a3 3 0 013 3v1"></path></svg> Logout
+            </button>
+        </div>
+        
+        <div class="flex-1 p-4 md:p-8 overflow-y-auto relative bg-gray-50">
+            <button onclick="toggleModal('adminDashboardModal')" class="hidden md:flex absolute top-6 right-8 text-gray-400 hover:text-dark items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100 hover:border-accent transition-colors">
+                Tutup <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div id="panel-keterangan" class="admin-panel block">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 font-serif">Ikhtisar Keterangan</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-primary">
+                        <p class="text-sm text-gray-500 mb-1">Total Menu Aktif</p>
+                        <p class="text-4xl font-bold text-dark" id="stat-menu">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-accent">
+                        <p class="text-sm text-gray-500 mb-1">Total Foto Galeri</p>
+                        <p class="text-4xl font-bold text-dark" id="stat-gallery">0</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 border-l-4 border-l-green-500">
+                        <p class="text-sm text-gray-500 mb-1">Status Web</p>
+                        <p class="text-2xl font-bold text-green-500 flex items-center gap-2">Live (Storage)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-tampilan" class="admin-panel hidden">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800 font-serif mb-6">Pengaturan Tampilan Utama</h1>
+                <div class="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100">
+                    <p class="text-sm text-gray-500 mb-6 flex items-center gap-2"><svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg> Perubahan di sini akan langsung merubah teks di Halaman Depan secara otomatis.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Nama Cafe Utama</label>
+                            <input type="text" id="liveEdit-name1" oninput="handleLiveEdit('live-name1', this.value)" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-accent outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Sambungan Nama (Aksen)</label>
+                            <input type="text" id="liveEdit-name2" oninput="handleLiveEdit('live-name2', this.value)" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-accent outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Tagline Atas</label>
+                            <input type="text" id="liveEdit-tagline" oninput="handleLiveEdit('live-tagline', this.value)" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-accent outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Jam Operasional (Hero Chip)</label>
+                            <input type="text" id="liveEdit-hours" oninput="handleLiveEdit('live-hours', this.value)" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-accent outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium mb-1">Teks Tentang Kami</label>
+                            <textarea id="liveEdit-about" oninput="handleLiveEdit('live-about', this.value)" rows="3" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-accent outline-none"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium mb-1">Alamat (Maps Info)</label>
+                            <textarea id="liveEdit-address" oninput="handleLiveEdit('live-address', this.value)" rows="2" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-accent outline-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-menu" class="admin-panel hidden">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 font-serif">Manajemen Menu</h1>
+                    <button onclick="openFormMenu()" class="bg-primary hover:bg-accent hover:text-dark text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors shadow-md w-full md:w-auto">+ Tambah Menu Baru</button>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[700px]">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200 text-xs text-gray-500 uppercase tracking-wider font-semibold">
+                                <th class="p-4">Produk</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4">Harga Normal</th>
+                                <th class="p-4">Harga Promo/Coret</th>
+                                <th class="p-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-menu-tbody" class="text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="panel-galeri" class="admin-panel hidden">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-800 font-serif">Manajemen Galeri</h1>
+                    <button onclick="openFormGallery()" class="bg-primary hover:bg-accent hover:text-dark text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors shadow-md w-full md:w-auto">+ Tambah Foto via URL</button>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200 text-xs text-gray-500 uppercase tracking-wider font-semibold">
+                                <th class="p-4 w-24">Preview</th>
+                                <th class="p-4">URL & Alt Text</th>
+                                <th class="p-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-gallery-tbody" class="text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="crudMenuModal" class="fixed inset-0 z-[130] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
+            <h2 class="text-2xl font-bold text-primary mb-6 font-serif" id="crud-menu-title">Tambah Menu</h2>
+            <form id="form-crud-menu" onsubmit="handleSaveMenu(event)">
+                <input type="hidden" id="crud-menu-id">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Nama Menu</label>
+                        <input type="text" id="crud-menu-name" required class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:border-accent focus:ring-2 focus:ring-accent outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Kategori</label>
+                        <select id="crud-menu-category" required class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 outline-none focus:ring-2 focus:ring-accent transition-all">
+                            <option value="Kopi">Kopi</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Cemilan">Cemilan</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Harga Normal (Rp)</label>
+                            <input type="number" id="crud-menu-price" required class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 outline-none focus:ring-2 focus:ring-accent transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-700">Harga Coret (Opsional)</label>
+                            <input type="number" id="crud-menu-discount" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 outline-none focus:ring-2 focus:ring-accent transition-all" placeholder="Misal: 45000">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">URL Gambar (Opsional)</label>
+                        <input type="url" id="crud-menu-img" placeholder="https://..." class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 outline-none focus:ring-2 focus:ring-accent transition-all">
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeFormModal('crudMenuModal')" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-100 font-medium transition-colors">Batal</button>
+                        <button type="submit" id="btn-save-menu" class="flex-1 bg-primary hover:bg-accent text-white hover:text-dark rounded-xl font-bold transition-colors shadow-md">Simpan Data</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="crudGalleryModal" class="fixed inset-0 z-[130] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-lg relative">
+            <h2 class="text-2xl font-bold text-primary mb-6 font-serif">Tambah URL Foto</h2>
+            <form id="form-crud-gallery" onsubmit="handleSaveGallery(event)">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Direct URL Gambar Asli (.jpg/.png)</label>
+                        <input type="url" id="crud-gal-url" required placeholder="https://..." class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:border-accent focus:ring-2 focus:ring-accent outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-700">Teks Alternatif / Deskripsi (Alt Text)</label>
+                        <input type="text" id="crud-gal-alt" required placeholder="Misal: Nuansa Kopi Senja" class="w-full border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 focus:border-accent focus:ring-2 focus:ring-accent outline-none transition-all">
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeFormModal('crudGalleryModal')" class="flex-1 px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-100 font-medium transition-colors">Batal</button>
+                        <button type="submit" id="btn-save-gal" class="flex-1 bg-primary hover:bg-accent text-white hover:text-dark rounded-xl font-bold transition-colors shadow-md">Simpan Foto</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
