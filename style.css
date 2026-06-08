@@ -1,70 +1,105 @@
-/* TAHAP EKSPANSI: Custom Styles, Parallax & Masonry */
+/* style.css - Perbaikan Latar Belakang Komprehensif (Anti-Lag, Statis Total) */
 
 html { scroll-behavior: smooth; }
-body { padding-bottom: 5rem; }
 
-/* Background Coffee Parallax - Dibuat lebih visible 8% opacity */
-.coffee-pattern {
+/* FIX 1: CONTAINER BACKGROUND FIXED (DIAM TOTAL, OPACITY 20%, ANTI-BOCOR) */
+.fixed-bg-canvas {
     position: fixed;
-    top: -50px; left: 0; right: 0; bottom: -50px; /* Buffer untuk scroll */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
-    opacity: 0.08;
     pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 38c-8.837 0-16-7.163-16-16s7.163-16 16-16 16 7.163 16 16-7.163 16-16 16zm0-28c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3 15h6v2h-6v-2z' fill='%236F4E37' fill-rule='evenodd'/%3E%3C/svg%3E");
-    background-size: 100px 100px;
-    will-change: transform;
+    overflow: hidden;
 }
 
-/* Scrollbar Elegan */
+/* OVERLAY MODAL BACKGROUND ELEMEN DEKORASI (Dark Brown Theme) */
+.overlay-fixed-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Sembunyikan horizontal scrollbar bawaan */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* Custom Scrollbar Premium Standard */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: #FDFBF7; }
 ::-webkit-scrollbar-thumb { background: #6F4E37; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #EAB308; }
 
-/* Glassmorphism & Utilities */
+/* MASONRY PINTEREST GALLERY LAYOUT */
+.masonry-container {
+    column-count: 1;
+    column-gap: 1.5rem;
+}
+@media (min-width: 640px) { .masonry-container { column-count: 2; } }
+@media (min-width: 1024px) { .masonry-container { column-count: 3; } }
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+/* CSS KEYFRAMES: Animasi Melayang Halus Acak untuk Ornamen (Ringan) */
+@keyframes softBobbing {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1.5deg); }
+}
+@keyframes softBobbingSlow {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+.animate-bobbing { animation: softBobbing 5s ease-in-out infinite; }
+.animate-bobbing-slow { animation: softBobbingSlow 6.5s ease-in-out infinite; }
+
+/* INTERSECTION OBSERVER ANIMATION CLASS (Scroll Reveal Mulus) */
+.reveal-el {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.reveal-el.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Utility Styles & Animations */
 .glass-panel {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
-.hide-scrollbar::-webkit-scrollbar { display: none; }
-.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-.line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* CSS MASONRY LAYOUT (Membuat gambar rapat & zigzag estetik) */
-.masonry-item {
-    break-inside: avoid;
-    margin-bottom: 1.5rem;
-}
-
-/* Animasi Overlay & SPA yang Sangat Halus */
-@keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+@keyframes itemTransitionIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.99); }
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
-@keyframes fadeOutDown {
+@keyframes itemTransitionOut {
     from { opacity: 1; transform: translateY(0) scale(1); }
-    to { opacity: 0; transform: translateY(30px) scale(0.98); }
-}
-@keyframes toastEnter {
-    from { opacity: 0; transform: translateY(50px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes toastLeave {
-    from { opacity: 1; transform: translateY(0) scale(1); }
-    to { opacity: 0; transform: translateY(20px) scale(0.9); }
+    to { opacity: 0; transform: translateY(20px) scale(0.99); }
 }
 
-.fade-in-element { animation: fadeSlideUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-.fade-out-element { animation: fadeOutDown 0.4s ease-in forwards; }
-.toast-enter { animation: toastEnter 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-.toast-leave { animation: toastLeave 0.3s ease-in forwards; }
+.fade-in-element { animation: itemTransitionIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+.fade-out-element { animation: itemTransitionOut 0.35s ease-in forwards; }
 
 .is-loading { opacity: 0.3; pointer-events: none; transition: opacity 0.3s; }
 
-/* Efek Hover Khas Premium Web */
+/* Premium Global Hover Effects */
 .hover-card-effect { transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
 .hover-card-effect:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px -10px rgba(111, 78, 55, 0.2); 
+    transform: translateY(-6px);
+    box-shadow: 0 25px 45px -12px rgba(111, 78, 55, 0.22);
 }
