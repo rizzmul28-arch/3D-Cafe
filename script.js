@@ -97,8 +97,9 @@ function renderPublicMenu() {
         const headingStyles = "text-white";
         const badgeStyles = "bg-gray-900 text-accent border border-accent/20";
 
+        // Tambahan snap-center dan shrink-0 agar swipe berjalan mulus di mobile
         return `
-        <article class="reveal-el ${wrapperStyles} rounded-3xl overflow-hidden border relative hover-card-effect">
+        <article class="reveal-el ${wrapperStyles} rounded-3xl overflow-hidden border relative hover-card-effect snap-center shrink-0 w-[85%] md:w-auto">
             ${badge}
             <figure class="overflow-hidden"><img src="${item.img || 'https://via.placeholder.com/500'}" alt="${item.name}" class="w-full h-48 md:h-64 object-cover" loading="lazy"></figure>
             <div class="p-6">
@@ -130,7 +131,7 @@ function renderGallery() {
     // Filter HANYA data yg isFeatured: true untuk Halaman Utama (Max 3)
     const featuredHomeGallery = galleryState.filter(g => g.isFeatured === true).slice(0, 3);
     
-    // ASYMMETRIC GRID SYSTEM DENGAN PERSPEKTIF 3D (3 ITEMS)
+    // ASYMMETRIC 3D GRID SYSTEM DENGAN PERSPEKTIF 3D (3 ITEMS)
     if(homeBox) {
         if (featuredHomeGallery.length === 0) {
             homeBox.innerHTML = '<p class="col-span-full text-center text-gray-400">Belum ada galeri pilihan di Beranda.</p>';
@@ -152,12 +153,13 @@ function renderGallery() {
         }
     }
     
+    // Render Pinterest Masonry Galeri Lengkap (Modal) dengan tinggi alami h-auto
     if(fullBox) {
         fullBox.innerHTML = galleryState.map((img, idx) => `
             <div class="masonry-item rounded-3xl overflow-hidden shadow-lg border border-white/5 reveal-el relative group cursor-pointer" onclick="openLightbox(${idx})">
-                <img src="${img.url}" class="w-full object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy" alt="${img.alt}">
+                <img src="${img.url}" class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy" alt="${img.alt}">
                 <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <p class="text-white font-medium font-serif text-lg">${img.alt}</p>
+                    <p class="text-white font-medium font-serif text-sm">${img.alt}</p>
                 </div>
             </div>
         `).join('');
@@ -236,18 +238,22 @@ async function filterMenu(cat, btn) {
     } else {
         filtered.forEach(item => {
             const hasPromo = item.discountPrice && item.discountPrice > 0;
-            const badge = hasPromo ? `<div class="absolute top-4 right-4 bg-accent text-dark text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">Promo</div>` : '';
+            const badge = hasPromo ? `<div class="absolute top-2 right-2 md:top-4 md:right-4 bg-accent text-dark text-[10px] md:text-xs font-bold px-2 md:px-3 py-0.5 md:py-1 rounded-full shadow-md z-10">Promo</div>` : '';
             const pricing = hasPromo 
-                ? `<span class="text-accent font-bold text-xl">${formatRupiah(item.discountPrice)}</span><span class="text-gray-400 text-sm line-through">${formatRupiah(item.price)}</span>`
-                : `<span class="text-accent font-bold text-xl">${formatRupiah(item.price)}</span>`;
+                ? `<span class="text-accent font-bold text-base md:text-xl">${formatRupiah(item.discountPrice)}</span><span class="text-gray-400 text-xs md:text-sm line-through">${formatRupiah(item.price)}</span>`
+                : `<span class="text-accent font-bold text-base md:text-xl">${formatRupiah(item.price)}</span>`;
 
+            // GOFOOD/GRABFOOD STYLE LAYOUT (Baris di mobile, kartu vertikal di desktop)
             grid.innerHTML += `
-                <article class="reveal-el bg-gray-800/20 border border-white/5 backdrop-blur-md rounded-3xl overflow-hidden shadow-lg relative hover-card-effect">
+                <article class="reveal-el flex flex-row-reverse md:flex-col justify-between items-center md:items-stretch p-3 md:p-6 bg-gray-800/20 md:bg-gray-800/40 border border-white/5 md:border-white/10 rounded-2xl md:rounded-3xl shadow-lg relative hover-card-effect w-full">
                     ${badge}
-                    <figure><img src="${item.img || 'https://via.placeholder.com/500'}" class="w-full h-56 object-cover" loading="lazy"></figure>
-                    <div class="p-6">
-                        <h4 class="font-bold text-2xl text-white mb-1 font-serif line-clamp-1">${item.name}</h4>
-                        <div class="flex items-center gap-3 mt-4">${pricing}</div>
+                    <figure class="w-20 h-20 md:w-full md:h-56 flex-shrink-0 overflow-hidden rounded-xl md:rounded-2xl">
+                        <img src="${item.img || 'https://via.placeholder.com/500'}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" loading="lazy">
+                    </figure>
+                    <div class="flex-1 pr-4 md:pr-0 md:pt-4 text-left flex flex-col justify-center">
+                        <span class="hidden md:inline-block px-2.5 py-0.5 bg-gray-900 border border-white/10 text-[10px] text-accent uppercase font-bold rounded-lg mb-2 w-max">${item.category}</span>
+                        <h4 class="font-bold text-base md:text-2xl text-white mb-1 font-serif line-clamp-1">${item.name}</h4>
+                        <div class="flex items-center gap-2 mt-1 md:mt-2">${pricing}</div>
                     </div>
                 </article>`;
         });
@@ -255,6 +261,19 @@ async function filterMenu(cat, btn) {
     grid.classList.remove('is-loading');
     setTimeout(() => applyScrollReveal(), 50); 
 }
+
+// Menambahkan deteksi otomatis hari Sabtu pada input reservasi
+document.getElementById('res-tanggal').addEventListener('input', function(e) {
+    const dateVal = new Date(this.value);
+    const warning = document.getElementById('busy-warning-container');
+    
+    // Jika hari Sabtu (getDay === 6), tampilkan peringatan jam sibuk
+    if (dateVal.getDay() === 6) {
+        warning.classList.remove('hidden');
+    } else {
+        warning.classList.add('hidden');
+    }
+});
 
 document.getElementById('form-reservasi').addEventListener('submit', async function(e) {
     e.preventDefault();
