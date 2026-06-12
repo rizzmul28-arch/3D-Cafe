@@ -1,32 +1,32 @@
 // script.js - FIX MAIN THREAD CRASH, BASE64 VALIDATION, & FEATURED ITEMS LOGIC
 
-// ================= FIX 1: PERBAIKAN LOGIKA LOGIN ADMIN (FIX STUCK) =================
-const ADMIN_WA_NUMBER = "6281299998888"; 
+// ================= FIX 1: PERBAIKAN LOGIKA LOGIN ADMIN (3D CAFE) =================
+const ADMIN_WA_NUMBER = "6281278327756"; // WA Aktif 3D Cafe Poris Indah
 const OBFUSCATED_USER = "admin";
 // Base64 untuk '123' -> 'MTIz'
 const OBFUSCATED_PASS_HASH = "MTIz"; 
 
 // ================= 2. STATE MANAGEMENT & MOCK DATABASE (WITH isFeatured PROPERTY) =================
 const defaultConfig = {
-    name1: "MDM Coffee",
-    name2: "& Eatery",
-    tagline: "Est. 2023 • Tangerang",
-    hours: "Buka hingga 22.00 WIB",
-    about: "Berawal dari kecintaan terhadap racikan kopi nusantara, MDM Coffee & Eatery hadir untuk menjadi ruang temu. Bukan sekadar tempat singgah, melainkan rumah kedua di mana setiap cerita, tawa, dan gagasan mengalir bersama hangatnya kopi yang kami seduh.",
-    address: "Jl. Irigasi Sipon, RT.006/RW.004, Kenanga, Kec. Cipondoh, Kota Tangerang"
+    name1: "3D CAFE",
+    name2: "& Space",
+    tagline: "4.9 ★ (110 Ulasan) • Poris Indah",
+    hours: "Buka • Tutup pukul 23.30 WIB",
+    about: "Menyajikan harmoni sempurna antara ruang industrial minimalis dan racikan kopi modern di Cipondoh. Dirancang dengan presisi berestetika semen ekspos untuk kenyamanan bekerja (WFC), kolaborasi kreatif, maupun momen santai terbaik Anda.",
+    address: "Jl. Poris Indah Blk. E No.860B, RT.002/RW.004, Cipondoh Indah, Kec. Cipondoh, Tangerang, Banten 15148"
 };
 
 // Penambahan Default `isFeatured: true` untuk batas 3 data.
 const defaultMenuData = [
-    { id: 'M-1', name: 'Signature MDM Latte', price: 35000, discountPrice: 28000, category: 'Kopi', isPromo: true, isFeatured: true, img: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&q=80' },
-    { id: 'M-2', name: 'Nasi Goreng Special', price: 45000, discountPrice: null, category: 'Makanan', isPromo: false, isFeatured: true, img: 'https://images.unsplash.com/photo-1603048297172-c92544798d5e?w=500&q=80' },
-    { id: 'M-3', name: 'Truffle French Fries', price: 25000, discountPrice: null, category: 'Cemilan', isPromo: false, isFeatured: true, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&q=80' }
+    { id: 'M-1', name: 'Signature Butterscotch Caramel', price: 35000, discountPrice: 28000, category: 'Kopi', isPromo: true, isFeatured: true, img: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&q=80' },
+    { id: 'M-2', name: 'Nasi Goreng Special 3D', price: 38000, discountPrice: null, category: 'Makanan', isPromo: false, isFeatured: true, img: 'https://images.unsplash.com/photo-1603048297172-c92544798d5e?w=500&q=80' },
+    { id: 'M-3', name: 'Premium Truffle Fries', price: 27000, discountPrice: null, category: 'Cemilan', isPromo: false, isFeatured: true, img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&q=80' }
 ];
 
 const defaultGalleryData = [
-    { id: 'G-1', url: 'https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=800&q=80', alt: 'Nuansa Cozy MDM', isFeatured: true },
-    { id: 'G-2', url: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=500&q=80', alt: 'Kopi Artisan', isFeatured: true },
-    { id: 'G-3', url: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80', alt: 'Area Santai', isFeatured: true }
+    { id: 'G-1', url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1000&q=80', alt: 'Minimalist Bar & Barista Counter 3D Cafe', isFeatured: true },
+    { id: 'G-2', url: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80', alt: 'Sudut Mezzanine & Tangga Industrial', isFeatured: true },
+    { id: 'G-3', url: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=80', alt: 'Signature Butterscotch Caramel Brew', isFeatured: true }
 ];
 
 let appConfig = JSON.parse(localStorage.getItem('mdm_config')) || defaultConfig;
@@ -38,7 +38,6 @@ const updateStorage = (key, data) => localStorage.setItem(key, JSON.stringify(da
 
 
 // ================= FIX 2: LOGIKA INTERSECTION OBSERVER (SCROLL REVEAL ENGINE) =================
-// Dideklarasikan secara solid di Global Scope agar tidak terjadi ReferenceError
 function applyScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -84,19 +83,19 @@ function renderPublicMenu() {
     const homeBox = document.getElementById('home-menu-container');
     const fullBox = document.getElementById('full-menu-grid');
     
-    // TAHAP 5 FEATURED: Filter HANYA data yg isFeatured: true untuk Halaman Utama (Max 3)
+    // Filter HANYA data yg isFeatured: true untuk Halaman Utama (Max 3)
     const featuredHomeData = menuState.filter(m => m.isFeatured === true).slice(0, 3);
     
     const buildCardHTML = (item, isOverlayMode = false) => {
         const promoActive = item.discountPrice && item.discountPrice > 0;
         const badge = promoActive ? `<div class="absolute top-4 right-4 bg-accent text-dark text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">Promo</div>` : '';
         const price = promoActive 
-            ? `<span class="text-primary font-bold text-xl ${isOverlayMode ? 'text-golden':''}">${formatRupiah(item.discountPrice)}</span><span class="text-gray-400 text-sm line-through">${formatRupiah(item.price)}</span>`
-            : `<span class="text-primary font-bold text-xl ${isOverlayMode ? 'text-golden':''}">${formatRupiah(item.price)}</span>`;
+            ? `<span class="text-accent font-bold text-xl">${formatRupiah(item.discountPrice)}</span><span class="text-gray-400 text-sm line-through">${formatRupiah(item.price)}</span>`
+            : `<span class="text-accent font-bold text-xl">${formatRupiah(item.price)}</span>`;
 
-        const wrapperStyles = isOverlayMode ? "bg-white/5 border-white/10 backdrop-blur-md" : "bg-white border-gray-100";
-        const headingStyles = isOverlayMode ? "text-secondary" : "text-dark";
-        const badgeStyles = isOverlayMode ? "bg-white/10 text-gray-300" : "bg-gray-50 text-gray-500";
+        const wrapperStyles = isOverlayMode ? "bg-gray-800/20 border-white/5 backdrop-blur-md" : "bg-gray-800/40 border-white/10";
+        const headingStyles = "text-white";
+        const badgeStyles = "bg-gray-900 text-accent border border-accent/20";
 
         return `
         <article class="reveal-el ${wrapperStyles} rounded-3xl overflow-hidden border relative hover-card-effect">
@@ -117,7 +116,7 @@ function renderPublicMenu() {
     }
     
     if(fullBox && document.getElementById('fullMenuModal').classList.contains('flex')) {
-        const currentActiveFilter = document.querySelector('.menu-filter-btn.bg-golden') || document.querySelector('.menu-filter-btn');
+        const currentActiveFilter = document.querySelector('.menu-filter-btn.bg-accent') || document.querySelector('.menu-filter-btn');
         if(currentActiveFilter) currentActiveFilter.click();
     }
     const statMenu = document.getElementById('stat-menu');
@@ -128,27 +127,34 @@ function renderGallery() {
     const homeBox = document.getElementById('home-gallery-container');
     const fullBox = document.getElementById('full-gallery-grid');
     
-    // TAHAP 5 FEATURED: Filter HANYA data yg isFeatured: true untuk Halaman Utama (Max 3)
+    // Filter HANYA data yg isFeatured: true untuk Halaman Utama (Max 3)
     const featuredHomeGallery = galleryState.filter(g => g.isFeatured === true).slice(0, 3);
     
+    // ASYMMETRIC GRID SYSTEM DENGAN PERSPEKTIF 3D (3 ITEMS)
     if(homeBox) {
-        homeBox.innerHTML = featuredHomeGallery.length === 0 
-            ? '<p class="col-span-full text-center text-gray-400">Belum ada galeri pilihan di Beranda.</p>' 
-            : featuredHomeGallery.map((img, idx) => {
-            let columnSpan = idx === 0 ? "md:col-span-2 md:row-span-2 h-64 md:h-full" : "h-64";
-            return `
-            <div class="group relative overflow-hidden rounded-[2rem] ${columnSpan} reveal-el shadow-lg cursor-pointer" onclick="openLightbox(${galleryState.findIndex(g => g.id === img.id)})">
-                <img src="${img.url}" alt="${img.alt}" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-                    <span class="text-white font-medium border-2 border-white px-6 py-2 rounded-full font-serif text-lg">${img.alt}</span>
-                </div>
-            </div>`;
-        }).join('');
+        if (featuredHomeGallery.length === 0) {
+            homeBox.innerHTML = '<p class="col-span-full text-center text-gray-400">Belum ada galeri pilihan di Beranda.</p>';
+        } else {
+            homeBox.innerHTML = featuredHomeGallery.map((img, idx) => {
+                // Menentukan class layout asimetris untuk 3 item khusus
+                let gridClass = "asym-item-normal";
+                if(idx === 0) gridClass = "asym-item-large"; // Barista bar menonjol
+                if(idx === 1) gridClass = "asym-item-tall";  // Tangga mezzanine tinggi
+                
+                return `
+                <div class="${gridClass} group relative overflow-hidden rounded-3xl reveal-el depth-card cursor-pointer border border-white/10" onclick="openLightbox(${galleryState.findIndex(g => g.id === img.id)})">
+                    <img src="${img.url}" alt="${img.alt}" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                    <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-xs">
+                        <span class="text-white font-medium border-2 border-accent px-6 py-2 rounded-full font-serif text-lg">${img.alt}</span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
     }
     
     if(fullBox) {
         fullBox.innerHTML = galleryState.map((img, idx) => `
-            <div class="masonry-item rounded-3xl overflow-hidden shadow-lg reveal-el relative group cursor-pointer" onclick="openLightbox(${idx})">
+            <div class="masonry-item rounded-3xl overflow-hidden shadow-lg border border-white/5 reveal-el relative group cursor-pointer" onclick="openLightbox(${idx})">
                 <img src="${img.url}" class="w-full object-cover transform transition-transform duration-700 group-hover:scale-110" loading="lazy" alt="${img.alt}">
                 <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p class="text-white font-medium font-serif text-lg">${img.alt}</p>
@@ -213,35 +219,34 @@ function toggleModal(id) {
 async function filterMenu(cat, btn) {
     const grid = document.getElementById('full-menu-grid');
     document.querySelectorAll('.menu-filter-btn').forEach(b => {
-        b.classList.remove('bg-golden', 'text-dark', 'shadow-md');
-        b.classList.add('glass-panel', 'border', 'border-golden/30', 'text-secondary', 'shadow-sm');
+        b.classList.remove('bg-accent', 'text-dark', 'shadow-md');
+        b.classList.add('glass-panel', 'border', 'border-accent/30', 'text-white', 'shadow-sm');
     });
-    btn.classList.remove('glass-panel', 'border', 'border-golden/30', 'text-secondary', 'shadow-sm');
-    btn.classList.add('bg-golden', 'text-dark', 'shadow-md');
+    btn.classList.remove('glass-panel', 'border', 'border-accent/30', 'text-white', 'shadow-sm');
+    btn.classList.add('bg-accent', 'text-dark', 'shadow-md');
 
     grid.classList.add('is-loading');
     await new Promise(r => setTimeout(r, 350)); 
 
-    // Filter dari KESELURUHAN DATA (menuState), BUKAN featuredHomeData
     let filtered = cat === 'Semua' ? menuState : menuState.filter(item => item.category === cat);
     grid.innerHTML = ''; 
     
     if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full py-20 text-center"><p class="text-xl font-serif text-golden/50">Menu belum tersedia.</p></div>`;
+        grid.innerHTML = `<div class="col-span-full py-20 text-center"><p class="text-xl font-serif text-accent/50">Menu belum tersedia.</p></div>`;
     } else {
         filtered.forEach(item => {
             const hasPromo = item.discountPrice && item.discountPrice > 0;
             const badge = hasPromo ? `<div class="absolute top-4 right-4 bg-accent text-dark text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">Promo</div>` : '';
             const pricing = hasPromo 
-                ? `<span class="text-golden font-bold text-xl">${formatRupiah(item.discountPrice)}</span><span class="text-gray-400 text-sm line-through">${formatRupiah(item.price)}</span>`
-                : `<span class="text-golden font-bold text-xl">${formatRupiah(item.price)}</span>`;
+                ? `<span class="text-accent font-bold text-xl">${formatRupiah(item.discountPrice)}</span><span class="text-gray-400 text-sm line-through">${formatRupiah(item.price)}</span>`
+                : `<span class="text-accent font-bold text-xl">${formatRupiah(item.price)}</span>`;
 
             grid.innerHTML += `
-                <article class="reveal-el bg-white/5 border border-white/10 backdrop-blur-md rounded-3xl overflow-hidden shadow-lg relative hover-card-effect">
+                <article class="reveal-el bg-gray-800/20 border border-white/5 backdrop-blur-md rounded-3xl overflow-hidden shadow-lg relative hover-card-effect">
                     ${badge}
                     <figure><img src="${item.img || 'https://via.placeholder.com/500'}" class="w-full h-56 object-cover" loading="lazy"></figure>
                     <div class="p-6">
-                        <h4 class="font-bold text-2xl text-secondary mb-1 font-serif line-clamp-1">${item.name}</h4>
+                        <h4 class="font-bold text-2xl text-white mb-1 font-serif line-clamp-1">${item.name}</h4>
                         <div class="flex items-center gap-3 mt-4">${pricing}</div>
                     </div>
                 </article>`;
@@ -263,7 +268,7 @@ document.getElementById('form-reservasi').addEventListener('submit', async funct
     const time = document.getElementById('res-waktu').value;
     const note = document.getElementById('res-catatan').value;
 
-    let message = `Halo Admin MDM Coffee, saya ingin reservasi meja:%0A%0A*Nama:* ${name}%0A*Jumlah:* ${qty}%0A*Tgl/Jam:* ${date} ${time}%0A`;
+    let message = `Halo Admin 3D CAFE, saya ingin reservasi meja:%0A%0A*Nama:* ${name}%0A*Jumlah:* ${qty}%0A*Tgl/Jam:* ${date} ${time}%0A`;
     if(note) message += `*Catatan:* ${note}%0A`;
 
     await new Promise(r => setTimeout(r, 600)); 
@@ -275,8 +280,8 @@ document.getElementById('form-reservasi').addEventListener('submit', async funct
 function showToast(msg, type = 'success') {
     const box = document.getElementById('toast-container');
     const toast = document.createElement('div');
-    const color = type === 'success' ? 'bg-secondary text-primary border-accent' : 'bg-red-50 text-red-700 border-red-500';
-    toast.className = `toast-enter flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border-l-4 ${color} pointer-events-auto`;
+    const color = type === 'success' ? 'bg-gray-800 text-accent border-accent' : 'bg-red-950 text-red-400 border-red-500';
+    toast.className = `toast-enter flex items-center gap-3 px-6 py-4 rounded-2xl shadow-2xl border-l-4 ${color} pointer-events-auto border`;
     toast.innerHTML = `<div class="font-bold text-sm tracking-wide font-serif">${msg}</div>`;
     box.appendChild(toast);
     setTimeout(() => { toast.classList.remove('toast-enter'); toast.classList.add('toast-leave'); setTimeout(() => toast.remove(), 400); }, 3000);
@@ -373,22 +378,22 @@ function renderAdminMenu() {
     const tb = document.getElementById('admin-menu-tbody'); if(!tb) return;
     if(menuState.length === 0) { tb.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-gray-400">Data kosong.</td></tr>`; return; }
     tb.innerHTML = menuState.map(m => `
-        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors group">
+        <tr class="border-b border-gray-700 hover:bg-gray-800/50 transition-colors group">
             <td class="p-4 text-center">
-                <button onclick="toggleFeatured('menu', '${m.id}')" class="text-2xl transition-transform hover:scale-125 focus:outline-none ${m.isFeatured ? 'text-accent drop-shadow-md' : 'text-gray-300 grayscale opacity-50'}">
+                <button onclick="toggleFeatured('menu', '${m.id}')" class="text-2xl transition-transform hover:scale-125 focus:outline-none ${m.isFeatured ? 'text-accent drop-shadow-md' : 'text-gray-500 grayscale opacity-40'}">
                     ★
                 </button>
             </td>
             <td class="p-4 flex items-center gap-4">
-                <img src="${m.img || 'https://via.placeholder.com/100'}" class="w-12 h-12 rounded-xl object-cover shadow-sm group-hover:scale-110 transition-transform">
-                <span class="font-bold text-dark font-serif">${m.name}</span>
+                <img src="${m.img || 'https://via.placeholder.com/100'}" class="w-12 h-12 rounded-xl object-cover shadow-sm group-hover:scale-110 transition-transform border border-white/5">
+                <span class="font-bold text-white font-serif">${m.name}</span>
             </td>
-            <td class="p-4"><span class="px-3 py-1 bg-white border border-gray-200 text-gray-600 rounded-lg text-xs font-medium">${m.category}</span></td>
-            <td class="p-4 text-gray-600">${formatRupiah(m.price)}</td>
-            <td class="p-4 font-bold ${m.discountPrice ? 'text-accent' : 'text-gray-400'}">${m.discountPrice ? formatRupiah(m.discountPrice) : '-'}</td>
+            <td class="p-4"><span class="px-3 py-1 bg-gray-900 border border-white/10 text-gray-300 rounded-lg text-xs font-medium">${m.category}</span></td>
+            <td class="p-4 text-gray-300">${formatRupiah(m.price)}</td>
+            <td class="p-4 font-bold ${m.discountPrice ? 'text-accent' : 'text-gray-500'}">${m.discountPrice ? formatRupiah(m.discountPrice) : '-'}</td>
             <td class="p-4 text-right">
-                <button onclick="editMenu('${m.id}')" class="text-blue-500 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium mr-1">Edit</button>
-                <button onclick="deleteMenu('${m.id}')" class="text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium">Hapus</button>
+                <button onclick="editMenu('${m.id}')" class="text-accent hover:bg-accent/10 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium mr-1">Edit</button>
+                <button onclick="deleteMenu('${m.id}')" class="text-red-400 hover:bg-red-900/20 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium">Hapus</button>
             </td>
         </tr>
     `).join('');
@@ -459,15 +464,15 @@ function renderAdminGallery() {
     const tb = document.getElementById('admin-gallery-tbody'); if(!tb) return;
     if(galleryState.length === 0) { tb.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-gray-400">Galeri kosong.</td></tr>`; return; }
     tb.innerHTML = galleryState.map(g => `
-        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+        <tr class="border-b border-gray-700 hover:bg-gray-800/50 transition-colors">
             <td class="p-4 text-center">
-                <button onclick="toggleFeatured('gallery', '${g.id}')" class="text-2xl transition-transform hover:scale-125 focus:outline-none ${g.isFeatured ? 'text-accent drop-shadow-md' : 'text-gray-300 grayscale opacity-50'}">
+                <button onclick="toggleFeatured('gallery', '${g.id}')" class="text-2xl transition-transform hover:scale-125 focus:outline-none ${g.isFeatured ? 'text-accent drop-shadow-md' : 'text-gray-500 grayscale opacity-40'}">
                     ★
                 </button>
             </td>
-            <td class="p-4"><img src="${g.url}" class="w-20 h-14 object-cover rounded-md shadow-sm"></td>
-            <td class="p-4 text-gray-700"><span class="font-bold text-dark block mb-1">${g.alt}</span><span class="text-xs text-blue-500 block truncate max-w-xs">${g.url}</span></td>
-            <td class="p-4 text-right"><button onclick="deleteGallery('${g.id}')" class="text-red-500 hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium">Hapus</button></td>
+            <td class="p-4"><img src="${g.url}" class="w-20 h-14 object-cover rounded-md shadow-sm border border-white/5"></td>
+            <td class="p-4 text-gray-300"><span class="font-bold text-white block mb-1">${g.alt}</span><span class="text-xs text-accent block truncate max-w-xs">${g.url}</span></td>
+            <td class="p-4 text-right"><button onclick="deleteGallery('${g.id}')" class="text-red-400 hover:bg-red-900/20 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium">Hapus</button></td>
         </tr>
     `).join('');
 }
@@ -485,7 +490,7 @@ async function handleSaveGallery(e) {
         id: 'G-' + Date.now(), 
         url: document.getElementById('crud-gal-url').value, 
         alt: document.getElementById('crud-gal-alt').value,
-        isFeatured: false // Default new item is not featured
+        isFeatured: false 
     });
     
     updateStorage('mdm_gallery', galleryState); renderAllUI(); closeFormModal('crudGalleryModal'); showToast('Foto ditambahkan!', 'success');
