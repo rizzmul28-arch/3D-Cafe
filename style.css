@@ -1,8 +1,10 @@
 /* style.css - Perbaikan Latar Belakang Komprehensif (Anti-Lag, Statis Total) */
 
+/* Mengimpor font google dan melarang scrolling horizontal liar */
 html { scroll-behavior: smooth; }
 
-/* EFECT TEKSTUR SEMEN EKSPOS SUBTLE (CONCRETE INDUSTRIAL STYLE) */
+/* EFECT TEKSTUR SEMEN EKSPOS SUBTLE (CONCRETE INDUSTRIAL STYLE) /
+/ Pola semen ekspos di latar belakang menggunakan radial-gradient berlapis */
 body {
 background-color: #0b0f19;
 background-image:
@@ -50,17 +52,21 @@ overflow: hidden;
 ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.2); }
 ::-webkit-scrollbar-thumb:hover { background: #06B6D4; }
 
-/* MASONRY PINTEREST GALLERY LAYOUT */
+/* MASONRY PINTEREST GALLERY LAYOUT (2 KOLOM DI MOBILE) /
 .masonry-container {
-column-count: 1;
+column-count: 2; / HP minimal 2 kolom /
+column-gap: 1rem; / Kompatibel penuh dengan engine CSS */
+
+@media (min-width: 768px) {
+.masonry-container {
+column-count: 3;
 column-gap: 1.5rem;
 }
-@media (min-width: 640px) { .masonry-container { column-count: 2; } }
-@media (min-width: 1024px) { .masonry-container { column-count: 3; } }
+}
 
 .masonry-item {
 break-inside: avoid;
-margin-bottom: 1.5rem;
+margin-bottom: 1rem;
 display: block;
 }
 
@@ -96,15 +102,16 @@ height: 280px !important;
 }
 }
 
-/* 3D Depth Card Effect on Scroll */
+/* 3D Depth Card Effect on Scroll & Hover (Concrete Shadow Glow) /
 .depth-card {
 transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(0);
 transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease;
+box-shadow: 0 10px 30px -10px rgba(6, 182, 212, 0.15); / Semen ekspos cyan shadow /
 }
 .depth-card:hover {
 transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(15px) scale(1.02);
-box-shadow: 0 30px 60px -15px rgba(6, 182, 212, 0.35);
-}
+box-shadow: 0 30px 60px -15px rgba(6, 182, 212, 0.35); / Glow pendaran cyan */
+
 
 /* CSS KEYFRAMES: Animasi Melayang Halus Acak untuk Ornamen (Ringan) */
 @keyframes softBobbing {
