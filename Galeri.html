@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Foto Estetik 3D CAFE | Suasana Industrial</title>
+    <meta name="description" content="Lihat sudut-sudut visual estetik dari interior semen ekspos, tangga mezzanine, dan area barista bar di 3D CAFE Poris Indah.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Poppins', 'sans-serif'], 
+                        serif: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#06B6D4', secondary: '#F3F4F6',
+                        accent: '#22D3EE', dark: '#0B0F19',
+                        darkbrown: '#111827', golden: '#06B6D4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-secondary font-sans antialiased overflow-x-hidden relative min-h-screen">
+    
+    <!-- Tombol Kembali Melayang -->
+    <a href="index.html" class="fixed top-6 left-6 z-50 glass-panel bg-white/10 shadow-lg border border-primary/30 text-secondary px-5 py-2.5 rounded-full flex items-center gap-2 font-semibold hover:bg-primary hover:text-dark transition-all duration-300 hover:scale-105">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg> Beranda
+    </a>
+
+    <main class="max-w-7xl mx-auto px-6 pt-28 pb-20 relative z-10 w-full">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-accent font-serif">Galeri Lengkap</h1>
+            <p class="text-gray-400 mt-2 font-light">Setiap sudut arsitektur, racikan, dan kenyamanan visual Anda.</p>
+        </header>
+
+        <!-- Pinterest Masonry Layout asimetris HP & Desktop -->
+        <div id="full-gallery-grid" class="masonry-container w-full">
+            <div class="text-center text-gray-400 py-10 animate-pulse">Memuat galeri foto...</div>
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="fixed inset-0 z-[200] hidden bg-black/95 backdrop-blur-xl items-center justify-center fade-in-element">
+        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white hover:text-accent z-[210] p-2 bg-white/10 rounded-full glass-panel hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <button onclick="prevLightbox()" class="absolute left-4 md:left-10 text-white hover:text-accent z-[210] p-3 bg-white/10 rounded-full glass-panel hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <img id="lightbox-img" src="" class="max-h-[80vh] max-w-[85vw] object-contain rounded-xl shadow-2xl transition-opacity duration-300" alt="Lightbox Preview">
+        <button onclick="nextLightbox()" class="absolute right-4 md:right-10 text-white hover:text-accent z-[210] p-3 bg-white/10 rounded-full glass-panel hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <p id="lightbox-caption" class="absolute bottom-6 text-white font-serif text-lg md:text-xl text-center w-full px-4 tracking-wide"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
