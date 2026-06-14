@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Supabase JS Client SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -93,7 +96,7 @@
     </header>
 
     <main>
-        <!-- HERO SECTION (Dengan Kontrol Gambar Latar Belakang) -->
+        <!-- HERO SECTION -->
         <section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden bg-cover bg-center">
             <div class="absolute inset-0 bg-black/75 z-10"></div>
             
@@ -135,14 +138,13 @@
             </section>
         </div>
 
-        <!-- BEST SELLER SECTION (GRID KOPOK 2x2 UNTUK MOBILE) -->
+        <!-- BEST SELLER SECTION -->
         <section id="menu" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
             <div class="text-center mb-16 reveal-el">
                 <h3 class="text-3xl md:text-4xl font-bold text-accent mb-4 font-serif">Best Seller Menu</h3>
                 <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
             </div>
             
-            <!-- Grid 2x2 di Mobile, 4 Kolom di Desktop -->
             <div id="home-menu-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-12 max-w-full overflow-hidden">
                 <div class="col-span-full text-center text-gray-400 py-10 animate-pulse">Memuat menu terlaris...</div>
             </div>
@@ -155,7 +157,7 @@
             </div>
         </section>
 
-        <!-- HIGHLIGHT GALLERY SECTION (Tampilan Grid Asimetris HP/Desktop) -->
+        <!-- HIGHLIGHT GALLERY SECTION -->
         <section id="gallery" class="py-24 px-6 md:px-12 bg-white/5 backdrop-blur-md relative border-y border-white/5">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-16 reveal-el">
@@ -163,7 +165,6 @@
                     <div class="w-24 h-1 bg-primary mx-auto rounded-full"></div>
                 </div>
                 
-                <!-- Grid Asimetris Estetik 3D perspective -->
                 <div id="home-gallery-container" class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
                      <div class="col-span-full text-center text-gray-400 py-10 animate-pulse">Memuat galeri...</div>
                 </div>
