@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D CAFE | CMS Panel Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Poppins', 'sans-serif'], 
+                        serif: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#06B6D4', secondary: '#F3F4F6',
+                        accent: '#22D3EE', dark: '#0B0F19',
+                        darkbrown: '#111827', golden: '#06B6D4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-secondary font-sans antialiased bg-gray-900 min-h-screen">
+
+    <!-- LOGIN PANEL -->
+    <div id="adminLoginModal" class="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-gray-800 p-8 rounded-3xl shadow-2xl w-full max-w-md relative border border-white/5">
+            <h2 class="text-3xl font-bold text-center text-primary mb-6 font-serif">Admin Access</h2>
+            <form id="form-admin-login" onsubmit="handleLoginSubmit(event)">
+                <div class="space-y-5">
+                    <input type="text" id="admin-username" class="w-full border-white/10 border rounded-xl px-5 py-4 focus:ring-2 focus:ring-primary focus:outline-none bg-white/5 text-white text-lg" required placeholder="Username">
+                    <input type="password" id="admin-password" class="w-full border-white/10 border rounded-xl px-5 py-4 focus:ring-2 focus:ring-primary focus:outline-none bg-white/5 text-white text-lg" required placeholder="Password">
+                    <button type="submit" id="btn-login-admin" class="w-full bg-primary hover:bg-accent text-dark py-4 rounded-xl transition-all font-bold mt-2 shadow-md text-lg">Login</button>
+                </div>
+            </form>
+            <div class="text-center mt-6">
+                <a href="index.html" class="text-sm text-gray-500 hover:text-white transition-colors">← Kembali ke Beranda</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div id="adminDashboardModal" class="hidden flex-col md:flex-row w-full min-h-screen">
+        <div class="w-full md:w-64 bg-black/60 text-white p-4 md:p-6 flex flex-col shrink-0 shadow-xl z-10 border-b md:border-r border-white/5">
+            <div class="flex justify-between items-center mb-4 md:mb-8">
+                <h2 class="text-xl md:text-2xl font-bold text-accent font-serif">3D CAFE CMS</h2>
+                <a href="index.html" class="text-sm text-gray-400 hover:text-white">Home</a>
+            </div>
+            <nav class="flex flex-row md:flex-col gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0 flex-1">
+                <button onclick="switchAdminTab('keterangan')" id="tab-keterangan" class="admin-tab whitespace-nowrap text-left px-4 py-3 bg-white/10 rounded-lg text-white font-medium transition-colors">Dashboard</button>
+                <button onclick="switchAdminTab('tampilan')" id="tab-tampilan" class="admin-tab whitespace-nowrap text-left px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors">Tampilan Utama</button>
+                <button onclick="switchAdminTab('menu')" id="tab-menu" class="admin-tab whitespace-nowrap text-left px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors">Kelola Menu</button>
+                <button onclick="switchAdminTab('galeri')" id="tab-galeri" class="admin-tab whitespace-nowrap text-left px-4 py-3 text-gray-400 hover:bg-white/5 rounded-lg transition-colors">Kelola Galeri</button>
+            </nav>
+            <button onclick="handleAdminLogout()" class="mt-4 md:mt-auto px-4 py-3 text-red-400 hover:bg-white/5 rounded-lg text-left flex items-center gap-2 justify-center md:justify-start">Logout</button>
+        </div>
+        
+        <div class="flex-1 p-4 md:p-8 overflow-y-auto relative bg-[#0b0f19]">
+            <div id="panel-keterangan" class="admin-panel block">
+                <h1 class="text-2xl md:text-3xl font-bold text-white mb-6 font-serif">Ikhtisar Keterangan</h1>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gray-800 p-6 rounded-2xl shadow-sm border border-white/5 border-l-4 border-l-primary">
+                        <p class="text-sm text-gray-400 mb-1">Total Menu Aktif</p>
+                        <p class="text-4xl font-bold text-white" id="stat-menu">0</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-2xl shadow-sm border border-white/5 border-l-4 border-l-accent">
+                        <p class="text-sm text-gray-400 mb-1">Total Foto Galeri</p>
+                        <p class="text-4xl font-bold text-white" id="stat-gallery">0</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-2xl shadow-sm border border-white/5 border-l-4 border-l-green-500">
+                        <p class="text-sm text-gray-400 mb-1">Status Web</p>
+                        <p class="text-2xl font-bold text-green-500">Live (Storage Mode)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAMPILAN UTAMA TAB (MENGEDIT BACKGROUND HERO & TENTANG KAMI) -->
+            <div id="panel-tampilan" class="admin-panel hidden">
+                <h1 class="text-2xl md:text-3xl font-bold text-white font-serif mb-6">Pengaturan Tampilan Utama</h1>
+                <div class="bg-gray-800 p-6 md:p-8 rounded-3xl shadow-sm border border-white/5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Nama Cafe Utama</label>
+                            <input type="text" id="liveEdit-name1" oninput="handleLiveEdit('name1', this.value)" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Sambungan Nama (Aksen)</label>
+                            <input type="text" id="liveEdit-name2" oninput="handleLiveEdit('name2', this.value)" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Tagline Atas</label>
+                            <input type="text" id="liveEdit-tagline" oninput="handleLiveEdit('tagline', this.value)" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Jam Operasional (Hero Chip)</label>
+                            <input type="text" id="liveEdit-hours" oninput="handleLiveEdit('hours', this.value)" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Link URL Banner Atas (Hero Background)</label>
+                            <input type="url" id="liveEdit-hero_bg_url" oninput="handleLiveEdit('hero_bg_url', this.value)" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Teks Tentang Kami</label>
+                            <textarea id="liveEdit-about" oninput="handleLiveEdit('about', this.value)" rows="3" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Link URL Gambar Tentang Kami</label>
+                            <input type="url" id="liveEdit-about_img_url" oninput="handleLiveEdit('about_img_url', this.value)" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-gray-400 font-medium mb-1">Alamat (Maps Info)</label>
+                            <textarea id="liveEdit-address" oninput="handleLiveEdit('address', this.value)" rows="2" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:ring-2 focus:ring-primary outline-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB MANAJEMEN MENU -->
+            <div id="panel-menu" class="admin-panel hidden">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-white font-serif">Manajemen Menu</h1>
+                    <button onclick="openFormMenu()" class="bg-primary hover:bg-accent text-dark px-6 py-3 rounded-xl text-sm font-bold transition-colors shadow-md w-full md:w-auto">+ Tambah Menu Baru</button>
+                </div>
+                <div class="bg-gray-800 rounded-2xl shadow-sm border border-white/5 overflow-hidden overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[800px]">
+                        <thead>
+                            <tr class="bg-black/40 border-b border-white/10 text-xs text-gray-400 uppercase tracking-wider font-semibold">
+                                <th class="p-4 text-center w-24">Home Grid</th>
+                                <th class="p-4">Produk</th>
+                                <th class="p-4">Kategori</th>
+                                <th class="p-4">Harga Normal</th>
+                                <th class="p-4">Harga Promo</th>
+                                <th class="p-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-menu-tbody" class="text-sm text-gray-300"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB MANAJEMEN GALERI -->
+            <div id="panel-galeri" class="admin-panel hidden">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
+                    <h1 class="text-2xl md:text-3xl font-bold text-white font-serif">Manajemen Galeri</h1>
+                    <button onclick="openFormGallery()" class="bg-primary hover:bg-accent text-dark px-6 py-3 rounded-xl text-sm font-bold transition-colors shadow-md w-full md:w-auto">+ Tambah Foto via URL</button>
+                </div>
+                <div class="bg-gray-800 rounded-2xl shadow-sm border border-white/5 overflow-hidden overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[700px]">
+                        <thead>
+                            <tr class="bg-black/40 border-b border-white/10 text-xs text-gray-400 uppercase tracking-wider font-semibold">
+                                <th class="p-4 text-center w-24">Home Highlight</th>
+                                <th class="p-4 w-24">Preview</th>
+                                <th class="p-4">URL & Deskripsi Gambar</th>
+                                <th class="p-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-gallery-tbody" class="text-sm text-gray-300"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT MENU -->
+    <div id="crudMenuModal" class="fixed inset-0 z-[130] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-lg relative max-h-[90vh] overflow-y-auto border border-white/5 text-white">
+            <h2 class="text-2xl font-bold text-accent mb-6 font-serif" id="crud-menu-title">Tambah Menu</h2>
+            <form id="form-crud-menu" onsubmit="handleSaveMenu(event)">
+                <input type="hidden" id="crud-menu-id">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-300">Nama Menu</label>
+                        <input type="text" id="crud-menu-name" required class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:border-primary outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-300">Kategori Khas 3D CAFE</label>
+                        <select id="crud-menu-category" required class="w-full border border-white/10 rounded-xl px-4 py-3 bg-gray-900 text-white focus:ring-2 focus:ring-primary outline-none transition-all">
+                            <option value="Essential Coffee">Essential Coffee</option>
+                            <option value="Signature Drink">Signature Drink</option>
+                            <option value="Tea Based">Tea Based</option>
+                            <option value="Other Beverage">Other Beverage</option>
+                            <option value="Artisan Tea">Artisan Tea</option>
+                            <option value="Snacks">Snacks</option>
+                            <option value="Main Course">Main Course</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-300">Harga Normal (Rp)</label>
+                            <input type="number" id="crud-menu-price" required class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1 text-gray-300">Harga Promo (Opsional)</label>
+                            <input type="number" id="crud-menu-discount" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white outline-none focus:ring-2 focus:ring-primary" placeholder="Misal: 20000">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-300">URL Gambar (Unsplash/Direct)</label>
+                        <input type="url" id="crud-menu-img" placeholder="https://..." class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeFormModal('crudMenuModal')" class="flex-1 px-4 py-3 border border-white/10 rounded-xl hover:bg-white/10 font-medium transition-colors">Batal</button>
+                        <button type="submit" id="btn-save-menu" class="flex-1 bg-primary hover:bg-accent text-dark rounded-xl font-bold transition-colors shadow-md">Simpan Data</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDIT GALERI -->
+    <div id="crudGalleryModal" class="fixed inset-0 z-[130] hidden bg-black/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-lg relative border border-white/5 text-white">
+            <h2 class="text-2xl font-bold text-accent mb-6 font-serif">Tambah URL Foto</h2>
+            <form id="form-crud-gallery" onsubmit="handleSaveGallery(event)">
+                <div class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-300">Direct URL Gambar (.jpg/.png)</label>
+                        <input type="url" id="crud-gal-url" required placeholder="https://..." class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:border-primary outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1 text-gray-300">Deskripsi Singkat (Caption)</label>
+                        <input type="text" id="crud-gal-alt" required placeholder="Misal: Area Barista Counter" class="w-full border border-white/10 rounded-xl px-4 py-3 bg-white/5 text-white focus:border-primary outline-none transition-all">
+                    </div>
+                    <div class="flex gap-3 pt-4">
+                        <button type="button" onclick="closeFormModal('crudGalleryModal')" class="flex-1 px-4 py-3 border border-white/10 rounded-xl hover:bg-white/10 font-medium transition-colors">Batal</button>
+                        <button type="submit" id="btn-save-gal" class="flex-1 bg-primary hover:bg-accent text-dark rounded-xl font-bold transition-colors shadow-md">Simpan Foto</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container" class="fixed bottom-6 right-6 z-[999] flex flex-col gap-3 pointer-events-none"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
